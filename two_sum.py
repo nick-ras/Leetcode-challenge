@@ -13,5 +13,6 @@ class Solution(object):
 					return(list)
 num = [3,2,4]
 target = 6
+
 theclass = Solution()
 print(theclass.twoSum(num, target))
