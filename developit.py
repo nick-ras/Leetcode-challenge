@@ -1,73 +1,28 @@
-from datetime import datetime
-import time
-import hashlib
-from urllib.request import urlopen, Request
+import os
+from email.message import EmailMessage
+import ssl
+import smtplib
 
+class emails(id):
+	email_sender = 'ttestesen81@gmail.com'
+	email_password = 'skbghjqffvrsxejl' #os.environ.get("EMAIL") #FIX
+	email_reciever = "nick-ras@mail.dk"
 
-class startit():
+	em = EmailMessage()
+	subject = ''
+	body = """"""
 
-	def  __init__(self, x):
-		x = 6
-		print(f"obj created from init and x changed to {x}")
+	em['From'] = email_sender
+	em['To'] = email_reciever
+	em['Subject'] = subject
+	em.set_content(body)
+	context = ssl.create_default_context()
 
-	def time(self):
-		now = datetime.now()
-		current_time = now.strftime("%H:%M:%S")
-		print("Current Time =", current_time)
+	def send_welcome_email(self, em, email_sender, email_password, context, email_reciever):
+		subject = 'welcome'
+		body = """welcome to automation"""
+		with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+			smtp.login(email_sender, email_password)
+			smtp.sendmail(email_sender, email_reciever, em.as_string())
 
- 
-# setting the URL you want to monitor
-url = Request('https://leetcode.com/',
-              headers={'User-Agent': 'Mozilla/5.0'})
- 
-# to perform a GET request and load the
-# content of the website and store it in a var
-response = urlopen(url).read()
- 
-# to create the initial hash
-currentHash = hashlib.sha224(response).hexdigest()
-print("running")
-time.sleep(10)
-while True:
-    try:
-        # perform the get request and store it in a var
-        response = urlopen(url).read()
-         
-        # create a hash
-        currentHash = hashlib.sha224(response).hexdigest()
-         
-        # wait for 30 seconds
-        time.sleep(30)
-         
-        # perform the get request
-        response = urlopen(url).read()
-         
-        # create a new hash
-        newHash = hashlib.sha224(response).hexdigest()
- 
-        # check if new hash is same as the previous hash
-        if newHash == currentHash:
-            continue
- 
-        # if something changed in the hashes
-        else:
-            # notify
-            print("something changed")
- 
-            # again read the website
-            response = urlopen(url).read()
- 
-            # create a hash
-            currentHash = hashlib.sha224(response).hexdigest()
- 
-            # wait for 30 seconds
-            time.sleep(30)
-            continue
-             
-    # To handle exceptions
-    except Exception as e:
-        print("error")
-
-hey = startit(3)
-
-hey.time()
+emails.
