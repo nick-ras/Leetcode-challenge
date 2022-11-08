@@ -1,6 +1,5 @@
+# git add .\unique_paths.py ; git commit -m "h" ; git push
 class Solution():
-	# def __init__(self):
-	# 	moves_init = 0
 
 	def recursive(self, m, n, hori, vert, moves):
 		if (vert >= m and hori >= n):
