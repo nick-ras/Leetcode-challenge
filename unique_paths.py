@@ -2,21 +2,18 @@
 class Solution():
 
 	def recursive(self, m, n, hori, vert, moves):
-		if (vert >= m and hori >= n):
+		moves + 1
+		if (vert >= m or hori >= n):
 			print(f"if {moves}")
-			return moves
-		if (hori < m):
-			moves = moves + Solution.recursive(self, m, n, hori + 1, vert, moves + 1)
-		elif (vert < m):
-			moves = moves + Solution.recursive(self, m, n, hori, vert + 1, moves + 1)
-		return moves
+			return int(moves)
+		moves = 1 + Solution.recursive(self, m, n, hori + 1, vert, moves + 1) + Solution.recursive(self, m, n, hori, vert + 1, moves + 1)
 		
 
 	def uniquePaths(self, m, n):
-		hori = 0
-		vert = 0
+		hori = 1
+		vert = 1
 		res = Solution.recursive(self, m, n, hori, vert, int(0))
 		print(f"end   {res}")
 
 obj = Solution()
-obj.uniquePaths(int(2), int(2))
+obj.uniquePaths(int(3), int(7))
