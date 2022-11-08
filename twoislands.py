@@ -1,29 +1,32 @@
 class Solution(object):
+
+	def recursive_check(self, grid, count_row, count_col, rows, columns):
+		# print(i, j, rows, columns)
+		if (count_row < 0 or count_row >= rows):
+			return
+		if (count_col < 0 or count_col >= columns):
+			return
+		if (grid[count_row][count_col] == '0'):
+			return
+		
+		grid[count_row][count_col] = '0'
+		
+		Solution.recursive_check(self, grid, count_row - 1, count_col, rows, columns)
+		Solution.recursive_check(self, grid, count_row + 1, count_col, rows, columns)
+		Solution.recursive_check(self, grid, count_row, count_col - 1, rows, columns)
+		Solution.recursive_check(self, grid, count_row, count_col + 1, rows, columns)
+
 	def numIslands(self, grid):
 		self.grid = grid
+		rows = len(grid)
+		columns = len(grid[0])
 		#grid = [[int(letter) for letter in x] for x in grid]
-		grid = [list(map(int, x)) for x in grid]
 		islands = 0
-		for count1, value in enumerate(grid):
-			for count2, y in enumerate(value):
-				if (int(y) == 1):
-					if (count2 != 0):
-						if (value[count2 - 1] == 1):
-							print("stop found 1 before")
-							continue
-					if (count2 != 4):
-						if (value[count2 + 1] == 1):
-							print("stop found 1 after")
-							continue
-					if(count1 != 0):
-						if (grid[count1 - 1][count2] == 1):
-							print("found above horizontal")
-							continue
-					if(count1 != 3):
-						if (grid[count1 + 1][count2] == 1):
-							print("found belowhorizontal")
-							continue
+		for count_row, i in enumerate(grid):
+			for count_col, j in enumerate(i):
+				if (j == '1'):
 					islands = islands + 1
+					Solution.recursive_check(self, grid, count_row, count_col, rows, columns)
 		print(islands)
 
 grid = [
